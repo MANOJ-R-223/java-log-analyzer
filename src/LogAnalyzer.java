@@ -75,15 +75,23 @@ public class LogAnalyzer {
         return false;
     }
 
+    private static double percentage(double num, double total) {
+        double perc = (num/total)*100; 
+        return perc;
+    }
+
     private static void printSummary(int total, int errors, int failedLogins, int infoCount, int warnCount){
 
         System.out.println("Log Analysis Summary");
             System.out.println();
             System.out.println("Total log entries: " + total);
-            System.out.println("ERROR entries: " + errors);
-            System.out.println("Failed login attempts: " + failedLogins);
-            System.out.println("INFO entries: " + infoCount);
-            System.out.println("WARN entries: " + warnCount);
+
+            if (total>0) {
+                System.out.printf("ERROR entries: %d (%.2f%%)%n" , errors, percentage(errors, total));
+                System.out.printf("Failed login attempts: %d (%.2f%%)%n", failedLogins, percentage(failedLogins, total));
+                System.out.printf("INFO entries: %d (%.2f%%)%n", infoCount, percentage(infoCount, total));
+                System.out.printf("WARN entries: %d (%.2f%%)%n", warnCount, percentage(warnCount, total));
+            }
 
     }
         
