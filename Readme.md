@@ -7,6 +7,8 @@ A simple Java-based command-line tool that reads system log files and extracts u
 - Prints all log entries
 - Counts total number of log entries
 - Count total number of error log
+- Count Failed log attempts
+- Get file path from command Line
 
 ## Tech Used
 - Java (Core Java, no frameworks)
