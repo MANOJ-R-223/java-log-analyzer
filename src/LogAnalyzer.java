@@ -17,6 +17,13 @@ public class LogAnalyzer {
         
     }
 
+    private static final String[] Failed_Login_Attempts = {
+        "FAILED LOGIN",
+        "LOGIN FAILED",
+        "AUTHENTICATION FAILED",
+        "INVALID PASSWORD"
+    };
+
     private static void analyzeLogFile(String logFilePath) {
 
         int totalLines = 0;
@@ -34,8 +41,6 @@ public class LogAnalyzer {
 
                 String line = orgLine.toUpperCase();
 
-                System.out.println("DEBUG -> " + line);
-
                 if (line.contains("ERROR")) {
                     errorCount++;
                 }
@@ -48,7 +53,7 @@ public class LogAnalyzer {
                     infoCount++;
                 }
 
-                if (line.contains("FAILED LOGIN")) {
+                if (isFailedLogin(line)) {
                     failedLoginCount++;
                 }
             }
@@ -59,6 +64,15 @@ public class LogAnalyzer {
             System.out.println("Error reading log file: " + e.getMessage());
         }
 
+    }
+
+    private static boolean isFailedLogin(String line) {
+        for (String keyword : Failed_Login_Attempts) {
+            if (line.contains(keyword)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static void printSummary(int total, int errors, int failedLogins, int infoCount, int warnCount){
