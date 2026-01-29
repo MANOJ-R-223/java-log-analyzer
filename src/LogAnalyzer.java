@@ -22,6 +22,8 @@ public class LogAnalyzer {
         int totalLines = 0;
         int errorCount = 0;
         int failedLoginCount = 0;
+        int warnCount = 0;
+        int infoCount = 0;
 
         try (BufferedReader br = new BufferedReader(new FileReader(logFilePath))) {
 
@@ -34,12 +36,20 @@ public class LogAnalyzer {
                     errorCount++;
                 }
 
+                if (line.contains("WARN")) {
+                    warnCount++;
+                }
+
+                if (line.contains("INFO")) {
+                    infoCount++;
+                }
+
                 if (line.contains("Failed login")) {
                     failedLoginCount++;
                 }
             }
 
-            printSummary(totalLines, errorCount, failedLoginCount);
+            printSummary(totalLines, errorCount, failedLoginCount, infoCount, warnCount);
 
         } catch (IOException e) {
             System.out.println("Error reading log file: " + e.getMessage());
@@ -47,13 +57,15 @@ public class LogAnalyzer {
 
     }
 
-    private static void printSummary(int total, int errors, int failedLogins){
+    private static void printSummary(int total, int errors, int failedLogins, int infoCount, int warnCount){
 
         System.out.println("Log Analysis Summary");
             System.out.println();
             System.out.println("Total log entries: " + total);
             System.out.println("ERROR entries: " + errors);
             System.out.println("Failed login attempts: " + failedLogins);
+            System.out.println("INFO entries: " + infoCount);
+            System.out.println("WARN entries: " + warnCount);
 
     }
         
