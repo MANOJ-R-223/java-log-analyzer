@@ -4,6 +4,12 @@ import java.io.IOException;
 
 public class LogAnalyzer {
 
+    private static final String[] Failed_Login_Attempts = {
+        "FAILED LOGIN",
+        "LOGIN FAILED",
+        "AUTHENTICATION FAILED",
+        "INVALID PASSWORD"
+    };
     public static void main(String[] args) {
 
         if (args.length == 0) {
@@ -16,13 +22,6 @@ public class LogAnalyzer {
         analyzeLogFile(logFilePath);
         
     }
-
-    private static final String[] Failed_Login_Attempts = {
-        "FAILED LOGIN",
-        "LOGIN FAILED",
-        "AUTHENTICATION FAILED",
-        "INVALID PASSWORD"
-    };
 
     private static void analyzeLogFile(String logFilePath) {
 
@@ -66,6 +65,22 @@ public class LogAnalyzer {
 
     }
 
+    private static void printSummary(int total, int errors, int failedLogins, int infoCount, int warnCount){
+
+        System.out.println("-----------------------------------------------------");
+        System.out.println("Log Analysis Summary");
+        System.out.println("-----------------------------------------------------");
+        System.out.println("Total log entries: " + total);
+
+        if (total>0) {
+            System.out.printf("ERROR entries: %d (%.2f%%)%n" , errors, percentage(errors, total));
+            System.out.printf("Failed login attempts: %d (%.2f%%)%n", failedLogins, percentage(failedLogins, total));
+            System.out.printf("INFO entries: %d (%.2f%%)%n", infoCount, percentage(infoCount, total));
+            System.out.printf("WARN entries: %d (%.2f%%)%n", warnCount, percentage(warnCount, total));
+        }
+
+    }
+
     private static boolean isFailedLogin(String line) {
         for (String keyword : Failed_Login_Attempts) {
             if (line.contains(keyword)) {
@@ -78,22 +93,6 @@ public class LogAnalyzer {
     private static double percentage(double num, double total) {
         double perc = (num/total)*100; 
         return perc;
-    }
-
-    private static void printSummary(int total, int errors, int failedLogins, int infoCount, int warnCount){
-
-        System.out.println("Log Analysis Summary");
-            System.out.println();
-            System.out.println("Total log entries: " + total);
-
-            if (total>0) {
-                System.out.printf("ERROR entries: %d (%.2f%%)%n" , errors, percentage(errors, total));
-                System.out.printf("Failed login attempts: %d (%.2f%%)%n", failedLogins, percentage(failedLogins, total));
-                System.out.printf("INFO entries: %d (%.2f%%)%n", infoCount, percentage(infoCount, total));
-                System.out.printf("WARN entries: %d (%.2f%%)%n", warnCount, percentage(warnCount, total));
-            }
-
-    }
-        
+    }   
     
 }

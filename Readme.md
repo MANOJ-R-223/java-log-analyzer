@@ -1,16 +1,19 @@
 # Java Log Analyzer
 
-A simple Java-based command-line tool that reads system log files and extracts useful information.
+Java Log Analyzer is a simple command-line tool built using core Java
+to analyze log files and extract useful information.
 
-## Current Features
-- Reads a log file line by line
-- Prints all log entries
-- Counts total number of log entries
-- Count total number of error log
-- Count Failed log attempts
-- Get file path from command Line
+## Features
 
-## Tech Used
-- Java (Core Java, no frameworks)
-- File handling using BufferedReader
-- Git for version control
+- Reads log files using BufferedReader
+- Counts total log entries
+- Detects INFO, WARN, and ERROR log levels
+- Detects multiple failed login patterns
+- Handles case-insensitive log entries
+- Displays count and percentage-based summary
+- Accepts log file path as a command-line argument
+
+## Usage
+
+```bash
+java LogAnalyzer <log-file-path>
