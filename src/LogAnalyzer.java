@@ -27,10 +27,14 @@ public class LogAnalyzer {
 
         try (BufferedReader br = new BufferedReader(new FileReader(logFilePath))) {
 
-            String line;
+            String orgLine;
 
-            while ((line = br.readLine()) != null) {
+            while ((orgLine = br.readLine()) != null) {
                 totalLines++;
+
+                String line = orgLine.toUpperCase();
+
+                System.out.println("DEBUG -> " + line);
 
                 if (line.contains("ERROR")) {
                     errorCount++;
@@ -44,7 +48,7 @@ public class LogAnalyzer {
                     infoCount++;
                 }
 
-                if (line.contains("Failed login")) {
+                if (line.contains("FAILED LOGIN")) {
                     failedLoginCount++;
                 }
             }
