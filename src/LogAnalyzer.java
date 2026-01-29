@@ -8,6 +8,7 @@ public class LogAnalyzer {
 
         String logFilePath = "logs/sample.log";
         int totalLines = 0;
+        int errorCount = 0;
 
         try (BufferedReader br = new BufferedReader(new FileReader(logFilePath))) {
 
@@ -15,10 +16,16 @@ public class LogAnalyzer {
 
             while ((line = br.readLine()) != null) {
                 totalLines++;
-                System.out.println(line);
+
+                if (line.contains("ERROR")) {
+                    errorCount++;
+                }
             }
 
-            System.out.println("\nTotal log entries: " + totalLines);
+            System.out.println("Log Analysis Summary");
+            System.out.println();
+            System.out.println("Total log entries: " + totalLines);
+            System.out.println("ERROR entries: " + errorCount);
 
         } catch (IOException e) {
             System.out.println("Error reading log file: " + e.getMessage());
